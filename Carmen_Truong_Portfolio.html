@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carmen Truong — Energy Engineering &amp; Economics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #EEEDE5;
+    --paper-2: #E4E3D8;
+    --ink: #13282C;
+    --ink-soft: #3C4E4F;
+    --line: #C4C9BB;
+    --line-soft: #D6D9CD;
+    --copper: #B0611F;
+    --copper-soft: #D98A3F;
+    --teal: #2E6A64;
+    --teal-deep: #142E2C;
+    --paper-on-dark: #EEEDE5aa;
+
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Source Serif 4', serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;}
+  ::selection{background:var(--copper-soft); color:var(--teal-deep);}
+
+  /* subtle blueprint grid texture */
+  .grid-bg{
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size: 44px 44px;
+    opacity:0.5;
+    pointer-events:none;
+  }
+
+  /* ---------- NAV ---------- */
+  header.site-nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 6vw;
+    background:rgba(238,237,229,0.86);
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .nav-mark{
+    font-family:var(--mono); font-size:13px; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--teal-deep); text-decoration:none;
+  }
+  .nav-links{display:flex; gap:28px; list-style:none;}
+  .nav-links a{
+    font-family:var(--mono); font-size:12.5px; letter-spacing:0.08em;
+    text-transform:uppercase; text-decoration:none; color:var(--ink-soft);
+    position:relative; padding-bottom:3px;
+  }
+  .nav-links a::after{
+    content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
+    background:var(--copper); transform:scaleX(0); transform-origin:left;
+    transition:transform .25s ease;
+  }
+  .nav-links a:hover::after, .nav-links a:focus-visible::after{transform:scaleX(1);}
+  .nav-links a:focus-visible, a:focus-visible{outline:2px solid var(--copper); outline-offset:3px;}
+  .nav-toggle{display:none; background:none; border:1px solid var(--line); border-radius:4px; padding:6px 10px; font-family:var(--mono); font-size:12px; color:var(--ink);}
+
+  @media (max-width: 720px){
+    .nav-links{
+      position:fixed; top:58px; right:0; left:0;
+      background:var(--paper); border-bottom:1px solid var(--line-soft);
+      flex-direction:column; gap:0; max-height:0; overflow:hidden;
+      transition:max-height .3s ease;
+    }
+    .nav-links.open{max-height:320px;}
+    .nav-links a{display:block; padding:14px 6vw; border-top:1px solid var(--line-soft);}
+    .nav-toggle{display:block;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; overflow:hidden;
+    min-height:92vh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:120px 6vw 80px;
+  }
+  .hero .eyebrow{
+    font-family:var(--mono); font-size:13px; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--teal); margin-bottom:22px; display:flex; align-items:center; gap:10px;
+  }
+  .hero .eyebrow .dot{width:7px; height:7px; border-radius:50%; background:var(--copper); box-shadow:0 0 0 4px rgba(176,97,31,0.15); animation:pulse 2.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.35;}}
+
+  .hero h1{
+    font-family:var(--display); font-weight:700;
+    font-size:clamp(2.6rem, 7vw, 5.4rem);
+    line-height:0.98; letter-spacing:-0.02em;
+    color:var(--teal-deep);
+    max-width:16ch;
+  }
+  .hero .role-line{
+    margin-top:26px; font-family:var(--body); font-style:italic;
+    font-size:clamp(1.05rem, 2.2vw, 1.4rem); color:var(--ink-soft);
+    max-width:46ch;
+  }
+  .hero .lede{
+    margin-top:28px; max-width:56ch; font-size:1.05rem; color:var(--ink-soft);
+  }
+  .hero .cta-row{margin-top:38px; display:flex; gap:16px; flex-wrap:wrap; align-items:center;}
+  .btn{
+    font-family:var(--mono); font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase;
+    padding:13px 22px; border-radius:2px; text-decoration:none; display:inline-block;
+    border:1px solid var(--teal-deep); color:var(--teal-deep);
+    transition:background .2s ease, color .2s ease;
+  }
+  .btn.primary{background:var(--teal-deep); color:var(--paper);}
+  .btn.primary:hover{background:var(--copper); border-color:var(--copper);}
+  .btn:not(.primary):hover{background:var(--teal-deep); color:var(--paper);}
+
+  .hero-trace{
+    position:absolute; right:-6%; top:0; bottom:0; width:52%;
+    pointer-events:none;
+  }
+  @media (max-width: 900px){ .hero-trace{display:none;} }
+
+  /* ---------- SECTION shell ---------- */
+  section{padding:96px 6vw; position:relative; scroll-margin-top:76px;}
+  .section-inner{max-width:920px; margin:0 auto;}
+  .section-label{
+    font-family:var(--mono); font-size:12.5px; letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--copper); margin-bottom:14px;
+  }
+  h2.section-title{
+    font-family:var(--display); font-weight:600; font-size:clamp(1.7rem,3.4vw,2.5rem);
+    color:var(--teal-deep); letter-spacing:-0.01em; margin-bottom:34px;
+  }
+
+  .divider{height:1px; background:var(--line); border:none; max-width:920px; margin:0 auto;}
+
+  /* ---------- PROFILE ---------- */
+  #profile p{font-size:1.12rem; color:var(--ink-soft); max-width:70ch;}
+  #profile p + p{margin-top:18px;}
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  @media (max-width:720px){.skills-grid{grid-template-columns:1fr;}}
+  .skill-panel{background:var(--paper); padding:28px 30px;}
+  .skill-panel .k-label{
+    font-family:var(--mono); font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--teal); margin-bottom:10px; display:flex; align-items:center; gap:8px;
+  }
+  .skill-panel .k-label::before{content:"§"; color:var(--copper); font-family:var(--display);}
+  .skill-panel p{color:var(--ink-soft); font-size:0.98rem;}
+
+  /* ---------- TIMELINE ---------- */
+  .timeline{position:relative; padding-left:36px;}
+  .timeline::before{
+    content:""; position:absolute; left:6px; top:6px; bottom:6px; width:2px;
+    background:repeating-linear-gradient(to bottom, var(--copper) 0, var(--copper) 6px, transparent 6px, transparent 12px);
+  }
+  .t-item{position:relative; padding-bottom:56px;}
+  .t-item:last-child{padding-bottom:0;}
+  .t-node{
+    position:absolute; left:-36px; top:4px; width:16px; height:16px;
+    background:var(--paper); border:2px solid var(--copper); border-radius:50%;
+  }
+  .t-item.secondment .t-node{border-color:var(--teal); background:var(--teal); }
+  .t-head{display:flex; flex-wrap:wrap; align-items:baseline; gap:10px; justify-content:space-between;}
+  .t-role{font-family:var(--display); font-weight:600; font-size:1.2rem; color:var(--teal-deep);}
+  .t-org{font-family:var(--mono); font-size:12.5px; color:var(--copper); letter-spacing:0.04em;}
+  .t-dates{font-family:var(--mono); font-size:12px; color:var(--ink-soft); white-space:nowrap;}
+  .t-sub{font-family:var(--display); font-weight:600; font-size:1rem; color:var(--teal); margin-top:22px; margin-bottom:6px;}
+  ul.t-bullets{margin-top:12px; padding-left:0; list-style:none;}
+  ul.t-bullets li{
+    position:relative; padding-left:18px; margin-bottom:9px; color:var(--ink-soft); font-size:0.98rem;
+  }
+  ul.t-bullets li::before{content:"–"; position:absolute; left:0; color:var(--copper);}
+
+  /* ---------- SPEAKING ---------- */
+  .speak-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  @media (max-width:720px){.speak-grid{grid-template-columns:1fr;}}
+  .speak-card{
+    border:1px solid var(--line); padding:26px 26px; background:var(--paper-2);
+    border-left:3px solid var(--copper);
+  }
+  .speak-card .org{font-family:var(--mono); font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--teal); margin-bottom:8px;}
+  .speak-card p{color:var(--ink-soft); font-size:0.98rem;}
+
+  /* ---------- EDUCATION ---------- */
+  .edu-row{display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; padding:22px 0; border-top:1px solid var(--line);}
+  .edu-row:last-child{border-bottom:1px solid var(--line);}
+  .edu-title{font-family:var(--display); font-weight:600; color:var(--teal-deep); font-size:1.05rem;}
+  .edu-meta{font-family:var(--mono); font-size:12px; color:var(--ink-soft);}
+  .edu-note{margin-top:8px; color:var(--ink-soft); font-size:0.95rem; max-width:60ch;}
+
+  /* ---------- FOOTER / CONTACT ---------- */
+  footer{
+    background:var(--teal-deep); color:var(--paper);
+    padding:90px 6vw 50px; position:relative; overflow:hidden;
+    scroll-margin-top:76px;
+  }
+  footer .section-inner{max-width:920px; margin:0 auto;}
+  footer h2{
+    font-family:var(--display); font-weight:700; font-size:clamp(2rem,5vw,3.2rem);
+    letter-spacing:-0.01em; margin-bottom:24px;
+  }
+  footer p.lede{color:#C9D3CE; max-width:52ch; margin-bottom:36px; font-size:1.05rem;}
+  .contact-grid{display:flex; flex-wrap:wrap; gap:14px 40px; margin-bottom:56px;}
+  .contact-grid a{
+    font-family:var(--mono); font-size:13px; letter-spacing:0.03em; color:var(--paper);
+    text-decoration:none; border-bottom:1px solid rgba(238,237,229,0.35); padding-bottom:3px;
+  }
+  .contact-grid a:hover{border-color:var(--copper-soft); color:var(--copper-soft);}
+  .foot-bottom{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; padding-top:26px; border-top:1px solid rgba(238,237,229,0.18);}
+  .foot-bottom span{font-family:var(--mono); font-size:11px; letter-spacing:0.06em; color:#8FA39C; text-transform:uppercase;}
+
+  /* reveal on scroll */
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <a href="#top" class="nav-mark">CARMEN TRUONG</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">MENU</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#profile">Profile</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#speaking">Speaking</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</header>
+
+<div id="top" class="hero">
+  <div class="grid-bg"></div>
+  <svg class="hero-trace" viewBox="0 0 500 700" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M480 0 L480 120 L360 120 L360 260 L440 260 L440 400 L300 400 L300 520 L420 520 L420 700"
+      stroke="#2E6A64" stroke-width="1.4" stroke-opacity="0.5"/>
+    <path d="M420 0 L420 60 L260 60 L260 220 L200 220 L200 340 L340 340 L340 480 L180 480 L180 620 L300 620 L300 700"
+      stroke="#B0611F" stroke-width="1.4" stroke-opacity="0.45" stroke-dasharray="2 8" stroke-linecap="round"/>
+    <circle cx="360" cy="120" r="4.5" fill="#B0611F"/>
+    <circle cx="440" cy="260" r="4.5" fill="#2E6A64"/>
+    <circle cx="300" cy="400" r="4.5" fill="#B0611F"/>
+    <circle cx="200" cy="340" r="4.5" fill="#2E6A64"/>
+    <circle cx="180" cy="480" r="4.5" fill="#B0611F"/>
+  </svg>
+
+  <div class="eyebrow"><span class="dot"></span> ENERGY ENGINEERING &amp; ECONOMICS — MILTON KEYNES, UK</div>
+  <h1>Turning power constraints into decisions people can act on.</h1>
+  <p class="role-line">Currently a Graduate Consultant at Hoare Lea, working across the technoeconomics of the energy transition — and exploring where that fits inside product management.</p>
+  <p class="lede">MEng Architectural Engineer (First-Class Honours) with experience spanning building services delivery at Skanska and energy economics consultancy at Hoare Lea, including a secondment leading a published UKGBC report on energy infrastructure and distribution.</p>
+  <div class="cta-row">
+    <a class="btn primary" href="#experience">See the work</a>
+    <a class="btn" href="#contact">Get in touch</a>
+  </div>
+</div>
+
+<hr class="divider">
+
+<section id="profile">
+  <div class="section-inner reveal">
+    <div class="section-label">01 — Profile</div>
+    <h2 class="section-title">A technical grounding, applied to real decisions</h2>
+    <p>I work at the intersection of engineering and economics — assessing where power limitations sit, what a sustainable transition actually costs, and how to explain that clearly to the people who have to decide. Over the past 10 months at Hoare Lea, that's meant technoeconomic assessments across 9 projects in commercial, industrial, logistics, renewable generation and data centre settings, coordinating delivery on four of them alongside engineers and stakeholders from very different disciplines.</p>
+    <p>Before that, I spent time at Skanska on the delivery side of building services, and led a secondment at UKGBC writing a published report on energy infrastructure and distribution systems. I'm now exploring how that combination of technical fluency and stakeholder translation could apply to product management in energy technology.</p>
+  </div>
+</section>
+
+<section id="skills" style="background:var(--paper-2);">
+  <div class="section-inner reveal">
+    <div class="section-label">02 — Key Skills</div>
+    <h2 class="section-title">What I bring to the table</h2>
+    <div class="skills-grid">
+      <div class="skill-panel">
+        <div class="k-label">Project Coordination</div>
+        <p>Delivery tracking, coordinating cross-functional teams, prioritisation, and exposure to programme scheduling (Gantt charts) in a construction contracting context.</p>
+      </div>
+      <div class="skill-panel">
+        <div class="k-label">Technical &amp; Analytical</div>
+        <p>Technoeconomic assessment, payback period analysis, technology suitability evaluation, Power BI.</p>
+      </div>
+      <div class="skill-panel">
+        <div class="k-label">Communication &amp; Stakeholder Engagement</div>
+        <p>Report and slide deck writing, public speaking, interdisciplinary collaboration, client-facing narratives.</p>
+      </div>
+      <div class="skill-panel">
+        <div class="k-label">Industry Knowledge</div>
+        <p>Energy policy and smart tools, sustainable energy transition, data centre and critical-sector resilience, energy security.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-inner reveal">
+    <div class="section-label">03 — Experience</div>
+    <h2 class="section-title">Where the work has taken me</h2>
+
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-node"></div>
+        <div class="t-head">
+          <div><span class="t-role">Graduate / Junior Consultant</span> — Energy Economics &amp; Engineering<br><span class="t-org">HOARE LEA</span></div>
+          <div class="t-dates">OCT 2025 — PRESENT</div>
+        </div>
+        <ul class="t-bullets">
+          <li>Delivered technoeconomic solutions to power limitation and energy transition challenges across 9 projects in commercial, industrial, logistics, renewable generation and data centre sectors.</li>
+          <li>Coordinated delivery on 4 projects, working with cross-functional teams of engineers and external stakeholders to keep timelines on track.</li>
+          <li>Performed technoeconomic assessments, producing data-driven recommendations based on payback periods and technology suitability.</li>
+          <li>Analysed energy strategies for critical sectors including data centres, balancing resilience and security with the transition to greener energy.</li>
+          <li>Authored client-facing reports and slide decks, translating technical findings into clear, sustainably minded narratives.</li>
+          <li>Delivered corporate responsibility sessions for work experience students, raising awareness of the energy sector.</li>
+        </ul>
+      </div>
+
+      <div class="t-item secondment">
+        <div class="t-node"></div>
+        <div class="t-sub">Secondment — UK Green Building Council (UKGBC)</div>
+        <ul class="t-bullets">
+          <li>Led the project to write and publish an industry report on Energy Infrastructure and Distribution Systems.</li>
+          <li>Invited by UKGBC to speak publicly on their behalf on the energy landscape, and how the built environment can work alongside energy networks to accelerate decarbonisation goals.</li>
+        </ul>
+      </div>
+
+      <div class="t-item">
+        <div class="t-node"></div>
+        <div class="t-head">
+          <div><span class="t-role">Graduate Building Services Engineer</span><br><span class="t-org">SKANSKA</span></div>
+          <div class="t-dates">2024 — SEPT 2025</div>
+        </div>
+        <ul class="t-bullets">
+          <li>Set up an investigation that recovered over £60,000 from subcontractor fire door remedial works.</li>
+          <li>Facilitated enabling works for a smart Building Management System (digital twin) integration into a public sector building.</li>
+          <li>Supported mobilisation of project execution on a live data centre, including stage 5 electrical design development.</li>
+          <li>Facilitated collaboration between stakeholders to outline milestones and challenges across the target programme.</li>
+          <li>Involved in project and asset lifecycle works across multiple live sites.</li>
+        </ul>
+      </div>
+
+      <div class="t-item">
+        <div class="t-node"></div>
+        <div class="t-head">
+          <div><span class="t-role">Industrial Placement</span><br><span class="t-org">RITCHIE DAFFIN</span></div>
+          <div class="t-dates">2022 — 2023</div>
+        </div>
+        <ul class="t-bullets">
+          <li>Produced Building Services Engineering drawings in AutoCAD and worked across drawing packs to convey cohesive engineering solutions.</li>
+          <li>Used Dialux to evaluate standard and emergency lighting scenarios for lighting specification and design.</li>
+          <li>Evaluated building performance across multiple projects using SAP and IES VE; sized MEP services including pipework, cabling, cable trays, ductwork, AHUs and PV arrays.</li>
+          <li>Collaborated with multidisciplinary teams to solve complex engineering problems.</li>
+        </ul>
+      </div>
+
+      <div class="t-item">
+        <div class="t-node"></div>
+        <div class="t-head">
+          <div><span class="t-role">SURE Research Project</span><br><span class="t-org">UNIVERSITY OF SHEFFIELD</span></div>
+          <div class="t-dates">2021</div>
+        </div>
+        <ul class="t-bullets">
+          <li>Conducted a bibliometric review and mapped co-citation networks between literature papers, building data-handling skills in Excel and Bibexcel.</li>
+          <li>Built foundational knowledge of global sustainable development, working remotely within an academic research environment.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="speaking" style="background:var(--paper-2);">
+  <div class="section-inner reveal">
+    <div class="section-label">04 — Public Speaking &amp; Thought Leadership</div>
+    <h2 class="section-title">Representing the work, out loud</h2>
+    <div class="speak-grid">
+      <div class="speak-card">
+        <div class="org">UKGBC</div>
+        <p>Invited speaker on the energy landscape and the built environment's role in decarbonisation, representing UKGBC as a secondee.</p>
+      </div>
+      <div class="speak-card">
+        <div class="org">CIBSE — Elemental Conference</div>
+        <p>Invited speaker at the Elemental conference, ExCeL London.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="section-inner reveal">
+    <div class="section-label">05 — Education</div>
+    <h2 class="section-title">Foundations</h2>
+
+    <div class="edu-row">
+      <div>
+        <div class="edu-title">MEng Architectural Engineering with a Year in Industry</div>
+        <div class="edu-meta">FIRST-CLASS HONOURS · THE UNIVERSITY OF SHEFFIELD</div>
+        <div class="edu-note">Engineering disciplines: Civil &amp; Structural, Mechanical, Electrical, Materials. Final year thesis — <em>The Design and Evaluation of Retrofit Scenarios for Carbon Reduction in UK Housing</em> — demonstrated a 46% reduction in operational carbon via air source heat pumps in a UK mid-terrace dwelling.</div>
+      </div>
+      <div class="edu-meta">2019 — 2024</div>
+    </div>
+
+    <div class="edu-row">
+      <div>
+        <div class="edu-title">A Levels: Maths, Biology, Physics (AAB)</div>
+        <div class="edu-meta">ROYAL LATIN SCHOOL</div>
+      </div>
+      <div class="edu-meta">2016 — 2018</div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="grid-bg" style="opacity:0.08;"></div>
+  <div class="section-inner reveal">
+    <div class="section-label" style="color:var(--copper-soft);">06 — Contact</div>
+    <h2>Let's talk about where this goes next.</h2>
+    <p class="lede">Open to speculative conversations about product management in energy technology — or anything adjacent to the energy transition.</p>
+    <div class="contact-grid">
+      <a href="mailto:carmentruong.ct@gmail.com">carmentruong.ct@gmail.com</a>
+      <a href="tel:+447462228883">+44 7462 228883</a>
+      <a href="http://linkedin.com/in/carmen-truong-6b99331a2" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+    <div class="foot-bottom">
+      <span>Carmen Truong — Milton Keynes, UK</span>
+      <span>Full UK Driving Licence</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open);
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', false);
+  }));
+
+  // scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
